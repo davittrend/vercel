@@ -12,10 +12,24 @@ interface Config {
   };
 }
 
+const getApiBaseUrl = () => {
+  if (import.meta.env.DEV) {
+    return 'http://localhost:3000/api';
+  }
+  return '/api';
+};
+
+const getRedirectUri = () => {
+  if (import.meta.env.DEV) {
+    return 'http://localhost:3000/callback';
+  }
+  return `${window.location.origin}/callback`;
+};
+
 export const config: Config = {
-  apiBaseUrl: import.meta.env.VITE_API_URL || '/api',
+  apiBaseUrl: getApiBaseUrl(),
   pinterestClientId: import.meta.env.VITE_PINTEREST_CLIENT_ID || '',
-  pinterestRedirectUri: `${window.location.origin}/callback`,
+  pinterestRedirectUri: getRedirectUri(),
   firebase: {
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY || '',
     authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || '',
